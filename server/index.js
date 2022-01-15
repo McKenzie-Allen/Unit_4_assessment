@@ -36,9 +36,5 @@ app.get("/api/fortune", (req, res) => {
 
 });
 
-app.post("/api/colorChange", (req, res) => {
-    res.status(200).send(req.body.shade)
-
-});
 
 app.listen(4000, () => console.log("Server running on 4000"));
