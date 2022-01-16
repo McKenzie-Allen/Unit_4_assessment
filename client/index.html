@@ -8,6 +8,11 @@
 <body class="container">
     <button id="complimentButton">Get a compliment</button>
     <button id="fortune">Get a fortune</button>
+    <div>
+        <label for="goals">Add a goal</label>
+        <input id="goal" type="text" name="goals" placeholder="Enter Goal Here">
+        <input type="submit" id=goals>
+    </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script>
@@ -18,12 +23,24 @@
                     alert(data);
                 });
         };
+
         document.getElementById("fortune").onclick = function() {
             axios.get("http://localhost:4000/api/fortune/")
                 .then(function(response) {
                     const data = response.data;
                     alert(data);
                 });
+        };
+
+        // document.getElementById("goals").onsubmit = function() {
+        //     axios.post("http://localhost:4000/api/goals/")
+        //         .then(function(response) {
+        //             const data = response.data;
+        //             alert(`your goal of ${data} has been added`)
+        //         });
+        // };
+        document.getElementById("goals").onsubmit = function() {
+            alert(document.getElementById("goal").value)
         };
     </script>
 </body>
