@@ -35,6 +35,15 @@ app.get("/api/fortune", (req, res) => {
     res.status(200).send(randomFortune);
 
 });
+const goals = []
+app.post("/api/goals", (req, res) => {
+        const goal = req.query
+        goals.push(goal)
+
+        res.status(200).send(goal)
+    })
+    // app.put()
+    // app.delete()
 
 
 app.listen(4000, () => console.log("Server running on 4000"));
