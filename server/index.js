@@ -36,11 +36,16 @@ app.get("/api/fortune", (req, res) => {
 
 });
 const goals = []
-app.post("/api/goals", (req, res) => {
-        const goal = req.query
-        goals.push(goal)
+app.post("/api/goals/", (req, res) => {
+    const { goal } = req.body
+    goals.push(goal)
 
-        res.status(200).send(goal)
+    console.log(goals)
+
+    res.status(200).send("goal")
+})
+app.get("/api/goals", (req, res) => {
+        res.status(200).send(goals)
     })
     // app.put()
     // app.delete()
