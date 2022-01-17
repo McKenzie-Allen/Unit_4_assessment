@@ -8,10 +8,12 @@
 <body class="container">
     <button id="complimentButton">Get a compliment</button>
     <button id="fortune">Get a fortune</button>
-    <div>
-        <label for="goals">Add a goal</label>
-        <input id="goal" type="text" name="goals" placeholder="Enter Goal Here">
+    <form id="form">
+        <label for="goal">Add a goal</label>
+        <input id="goal" type="text" name="goal" placeholder="Enter Goal Here">
         <input type="submit" id=goals>
+    </form>
+    <button id="showGoals">Show all goals</button>
     </div>
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -32,15 +34,36 @@
                 });
         };
 
-        // document.getElementById("goals").onsubmit = function() {
-        //     axios.post("http://localhost:4000/api/goals/")
-        //         .then(function(response) {
-        //             const data = response.data;
-        //             alert(`your goal of ${data} has been added`)
-        //         });
-        // };
-        document.getElementById("goals").onsubmit = function() {
-            alert(document.getElementById("goal").value)
+        const goalURL = "http://localhost:4000/api/goals"
+
+        const confirmGoal = ({
+            data: goal
+        }) => alert(`your goal of ${goal} has been added`);
+
+        const createGoal = body => axios.post(goalURL, body).then(confirmGoal);
+        const form = document.querySelector("form");
+
+        function submitHandler(e) {
+            e.preventDefault();
+
+            let goal = document.querySelector("#goal");
+
+            let bodyObj = {
+                goal: goal.value
+            };
+
+            createGoal(bodyObj);
+
+            goal.value = "";
+        };
+        form.addEventListener('submit', submitHandler)
+
+        document.getElementById("showGoals").onclick = function() {
+            axios.get(goalURL)
+                .then(function(response) {
+                    const data = response.data;
+                    alert(data);
+                });
         };
     </script>
 </body>
