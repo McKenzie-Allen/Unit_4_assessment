@@ -7,6 +7,9 @@ app.use(cors());
 
 app.use(express.json()); // When we want to be able to accept JSON.
 
+const goals = [];
+let globalId = 1
+
 app.get("/api/compliment", (req, res) => {
     const compliments = ["Gee, you're a smart cookie!",
         "Cool shirt!",
@@ -35,20 +38,46 @@ app.get("/api/fortune", (req, res) => {
     res.status(200).send(randomFortune);
 
 });
-const goals = []
+
 app.post("/api/goals/", (req, res) => {
     const { goal } = req.body
-    goals.push(goal)
+    let newGoal = {
+        id: globalId,
+        goal
+    };
 
+    goals.push(newGoal);
+
+    res.status(200).send(goal);
+    globalId++
+
+});
+
+app.get("/api/goals", (req, res) => {
     console.log(goals)
 
-    res.status(200).send("goal")
+
+    res.status(200).send(goals)
 })
-app.get("/api/goals", (req, res) => {
-        res.status(200).send(goals)
-    })
-    // app.put()
-    // app.delete()
+
+app.delete("/api/goals/:id", (req, res) => {
+    const { id } = req.params;
+
+    const index = goals.findIndex((goal) => goal.id == id);
+    goals.splice(index, 1);
+
+    res.status(200).send(goals)
+});
+
+app.put("/api/goals/:id", (req, res) => {
+    const { id } = req.params;
+    const { goal } = req.body
+
+    const index = goals.findIndex((goal) => goal.id == id);
+    goals[index].goal = goal
+
+    res.status(200).send(goals)
+});
 
 
 app.listen(4000, () => console.log("Server running on 4000"));
